@@ -8,9 +8,9 @@ namespace mineumcli
 	class MainClass
 	{
 		public const string mc_ufile_url="http://127.0.0.1/mc_version";
-		public static void Main (string[] args)
+	 static void Main (string[] args)
 		{
-			
+			//MinecraftClient Xen = new.MinecraftClient;
 			string act_ver = get_act_ver ();
 			string cur_ver = get_cur_ver ();
 			Console.WriteLine ("Current version:" + cur_ver + "\nActual version:" + act_ver);
@@ -24,7 +24,7 @@ namespace mineumcli
 			Console.ReadLine ();
 			
 		}
-		public static string get_path ()
+	 static string get_path ()
 		{
 			switch (System.Environment.OSVersion.Platform) {
 			case PlatformID.Unix:
@@ -38,7 +38,7 @@ namespace mineumcli
 				break;
 			}
 		}
-		public static string get_act_ver ()
+	 static string get_act_ver ()
 		{
 			WebClient con = new WebClient ();
 			byte[] udata = null;
@@ -49,7 +49,7 @@ namespace mineumcli
 				return e.Message;
 			}	
 		}
-		public static string get_cur_ver ()
+	 static string get_cur_ver ()
 		{
 			string cur_ver_file = "/home/sergey/.minecraft/mc_version";
 			FileStream f = new FileStream (cur_ver_file, FileMode.Open, FileAccess.Read);
@@ -58,7 +58,7 @@ namespace mineumcli
 			f.Read (buf, 0, length);
 			return Encoding.ASCII.GetString(buf);
 		}
-		public static void md5_gen ()
+	 static void md5_gen ()
 		{
 			string[] files = Directory.GetFiles ("/home/sergey/.minecraft", "*.*", SearchOption.AllDirectories);
 			foreach (string file in files) {
