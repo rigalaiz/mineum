@@ -1,5 +1,7 @@
 using System;
-
+using System.Net;
+using System.Xml;
+using System.Text;
 namespace mineumcli
 {
 	public class MinecraftClient
@@ -7,17 +9,47 @@ namespace mineumcli
 			public string path;
 			public string version;
 			public string[] md5_hashes;
-			public string XMLRead(string filename)
-			{
+			public string XMLRead (string filename)
+		{
+			//need to complete.
+			XmlTextReader reader = new XmlTextReader ("settings.xml");
+			while (reader.Read()) {
+			switch (reader.NodeType)
+				{
+				case XmlNodeType.Element:
+					break;
 
+				case XmlNodeType.Text: 
+					Console.WriteLine (reader.Value);
+					break;
+				}
+			}
 			}
 			public string getActualVersion() 
 			{ 
-			
+			//depends on XMLRead and may be function which will get vars from cfg
+				WebClient con = new WebClient ();
+				byte[] udata;
+				try {
+					udata = con.DownloadData (mc_ufile_url);
+					return Encoding.ASCII.GetString (udata);
+				} catch (System.Net.WebException e) {
+					return e.Message;
+				}	
 			}	
-			public string getPath() 
-			{ 
-			
+			public string getPath ()
+		{ 
+			//ready
+			switch (getOS ()) {
+				//1 - unix; 2 - win
+			case 1:
+				return System.Environment.GetEnvironmentVariable("HOME")+"/.minecraft";
+				break;
+
+			case 2:
+				return System.Environment.GetEnvironmentVariable("APPDATA")+"/.minecraft";
+				break;
+			}
 			}
 			public string[] getHashes() 
 			{ 
@@ -25,11 +57,22 @@ namespace mineumcli
 			}
 			public int getOS() 
 			{ 
-			
+			//ready. may be mac os ?
+			switch (System.Environment.OSVersion.Platform) {
+			case PlatformID.Unix:
+				return 1;
+				break;
+			case PlatformID.Win32NT:
+				return 2;
+				break;
+			default:
+				return 0;
+				break;
+			}
 			}
 			public string getVersion() 
 			{ 
-			
+			// get version of what?
 			}
 		}
 	public class MinecraftClientServer : MinecraftClient
