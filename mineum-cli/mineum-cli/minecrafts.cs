@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Xml;
 using System.Text;
+using System.IO;
 namespace mineumcli
 {
 	public class MinecraftClient
@@ -72,7 +73,12 @@ namespace mineumcli
 			}
 			public string getVersion() 
 			{ 
-			// get version of what?
+			// get version of what? i think - current
+			FileStream fstream = new FileStream(getPath ()+"\\mc_version",FileMode.Open,FileAccess.Read);
+			//(int)f.Length;
+			byte[] buf = new byte[(int)fstream.Length];
+			f.Read (buf, 0, fstream.Length);
+			return Encoding.ASCII.GetString(buf);
 			}
 		}
 	public class MinecraftClientServer : MinecraftClient

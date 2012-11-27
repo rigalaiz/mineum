@@ -11,7 +11,7 @@ namespace mineumcli
 	 static void Main (string[] args)
 		{
 			//MinecraftClient Xen = new.MinecraftClient;
-			string act_ver = get_act_ver ();
+			//string act_ver = get_act_ver ();
 			string cur_ver = get_cur_ver ();
 			Console.WriteLine ("Current version:" + cur_ver + "\nActual version:" + act_ver);
 			if (act_ver == cur_ver) {
@@ -20,7 +20,7 @@ namespace mineumcli
 				Console.WriteLine ("Update available");
 			}
 			//md5_gen ();
-			get_path ();
+			//get_path ();
 			Console.ReadLine ();
 			
 		}

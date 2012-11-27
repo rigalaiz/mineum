@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<minecraft>
+<mineum>
 	<version_url>http://skoda-24.ru/mc_version</version_url>
 	<sum_url>http://skoda-24.ru/mc/test.md5</sum_url>
-</minecraft>
+	<login>CFM-56-7B26</login>
+	<password>TEST</password>
+	<metar>
+		<url>http://127.0.0.1/metar</url>
+		<fav_icao>USTR</fav_icao>
+	</metar>
+</mineum>
