@@ -102,6 +102,12 @@ namespace mineumcli
 			}
 			public bool compareVersions ()
 			{
+			/*Console.WriteLine ("Current version:" + cur_ver + "\nActual version:" + act_ver);
+			if (act_ver == cur_ver) {
+				Console.WriteLine ("No updates available");
+			} else if (act_ver != cur_ver) {
+				Console.WriteLine ("Update available");
+			}*/
 				return true;
 			}
 		}
