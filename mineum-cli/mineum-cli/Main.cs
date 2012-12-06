@@ -3,6 +3,7 @@ using System.Net;
 using System.Text;
 using System.IO;
 using System.Security.Cryptography;
+using System.Xml.Serialization;
 namespace mineumcli
 {
 	class MainClass
@@ -10,8 +11,16 @@ namespace mineumcli
 		public const string mc_ufile_url="http://127.0.0.1/mc_version";
 	 static void Main (string[] args)
 		{
+			MinecraftSettings s;
+			FileStream fs = File.OpenRead("../../settings.xml");
+			XmlSerializer x = new XmlSerializer(typeof(MinecraftSettings));
+			s =(MinecraftSettings) x.Deserialize(fs);
+			Console.WriteLine("login="+s.login);
+			Console.ReadLine ();
 			//MinecraftClient Xen = new.MinecraftClient;
-			//string act_ver = get_act_ver ();
+
+
+			/*string act_ver = get_act_ver ();
 			string cur_ver = get_cur_ver ();
 			Console.WriteLine ("Current version:" + cur_ver + "\nActual version:" + act_ver);
 			if (act_ver == cur_ver) {
@@ -64,7 +73,7 @@ namespace mineumcli
 				}
 				
 				Console.WriteLine (sBuilder.ToString()+" "+file);
-			}
+			}*/
 			
 		}
 	}
