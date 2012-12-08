@@ -39,7 +39,7 @@ namespace mineumcli
 		{	
 			public string path;
 			public string version;
-			public string[] md5_hashes;
+			public string[,] md5_hashes;
 			/*public string XMLRead (string filename)
 		{
 
@@ -86,9 +86,10 @@ namespace mineumcli
 					
 			}
 			}
-			public string[] getHashes ()
+			public string[,] getHashes ()
 		{ 
 			string[] files = Directory.GetFiles (getPath (), "*.*", SearchOption.AllDirectories);
+			string[,]hashes = new string[files.Length,files.Length];
 			foreach (string file in files) {
 				FileStream f = new FileStream (file, FileMode.Open, FileAccess.Read);
 				byte[] buf = new byte[(int)f.Length];
@@ -98,14 +99,16 @@ namespace mineumcli
 				StringBuilder sBuilder = new StringBuilder ();
 				for (int i = 0; i<data.Length; i++) {
 					sBuilder.Append (data [i].ToString ("x2"));
-				}
-				
-				Console.WriteLine (sBuilder.ToString () + " " + file);
 
-				string[] d = new string[1];
-				return d;
-			}
-			return files;
+
+				}
+				for (int i = 0; i<files.Length;i++){
+				hashes[i,0]=file;
+				hashes[i,1]=sBuilder.ToString();
+				}
+				//Console.WriteLine (sBuilder.ToString () + " " + file);
+				}
+			return hashes;
 		}
 			//public string[] getHashesSrv ()
 			//{

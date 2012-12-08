@@ -10,7 +10,8 @@ namespace mineumcli
 
 			MinecraftClient Xen = new MinecraftClient();
 			MinecraftSettings s = new MinecraftSettings();
-			Console.WriteLine(Xen.getActualVersion());
+			Console.WriteLine(Xen.getHashes()[1,1]);
+			Console.WriteLine(Xen.getHashes()[1,0]);
 			Console.ReadLine ();
 
 			
