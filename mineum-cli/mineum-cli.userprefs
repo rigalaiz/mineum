@@ -2,9 +2,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="c:\Users\sergey\Documents\GitHub\mineum\mineum-cli\mineum-cli\Main.cs">
     <Files>
-      <File FileName="c:\Users\sergey\Documents\GitHub\mineum\mineum-cli\mineum-cli\Main.cs" Line="24" Column="1" />
-      <File FileName="mineum-cli\settings.xml" Line="10" Column="1" />
-      <File FileName="mineum-cli\minecrafts.cs" Line="103" Column="34" />
+      <File FileName="c:\Users\sergey\Documents\GitHub\mineum\mineum-cli\mineum-cli\Main.cs" Line="21" Column="26" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

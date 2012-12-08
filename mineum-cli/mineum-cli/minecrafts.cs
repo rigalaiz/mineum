@@ -3,11 +3,12 @@ using System.Net;
 using System.Xml;
 using System.Text;
 using System.IO;
+using System.Security.Cryptography;
 namespace mineumcli
 {
 	public class MinecraftSettings
 	{
-		public string mineum;
+
 		public string version_url;
 		public string md5hashes_url;
 		public string login;
@@ -16,9 +17,22 @@ namespace mineumcli
 		public string metar_fav_icao;
 		public MinecraftSettings ()
 		{
+			XmlTextReader reader = new XmlTextReader ("../../settings.xml");
+			this.version_url=getCbyE(reader,"version_url");
+			this.md5hashes_url=getCbyE(reader,"md5hashes_url");
 		}
 		public MinecraftSettings (string config_path)
 		{
+		}
+		public string getCbyE(XmlTextReader reader, string element)
+		{
+			while (reader.Read ()) {
+				if (reader.MoveToContent () == XmlNodeType.Element && reader.Name == element) {
+					return reader.ReadString ();
+				}
+
+			}
+			return reader.ReadString();
 		}
 	}
 	public class MinecraftClient
@@ -48,7 +62,7 @@ namespace mineumcli
 				WebClient con = new WebClient ();
 				byte[] udata;
 				try {
-					udata = con.DownloadData (version);
+				udata = con.DownloadData ("http://skoda-24.ru/mc_version");
 					return Encoding.ASCII.GetString (udata);
 				} catch (System.Net.WebException e) {
 					return e.Message;
@@ -61,21 +75,40 @@ namespace mineumcli
 				//1 - unix; 2 - win
 			case 1:
 				return System.Environment.GetEnvironmentVariable("HOME")+"/.minecraft";
-				break;
+
 
 			case 2:
 				return System.Environment.GetEnvironmentVariable("APPDATA")+"/.minecraft";
-				break;
+
 				default:
 					return "";
-					break;
+					
 			}
 			}
-			public string[] getHashes() 
-			{ 
+			public string[] getHashes ()
+		{ 
+			string[] files = Directory.GetFiles (getPath (), "*.*", SearchOption.AllDirectories);
+			foreach (string file in files) {
+				FileStream f = new FileStream (file, FileMode.Open, FileAccess.Read);
+				byte[] buf = new byte[(int)f.Length];
+				f.Read (buf, 0, (int)f.Length);
+				MD5 hasher = MD5.Create ();
+				byte[] data = hasher.ComputeHash (buf);
+				StringBuilder sBuilder = new StringBuilder ();
+				for (int i = 0; i<data.Length; i++) {
+					sBuilder.Append (data [i].ToString ("x2"));
+				}
+				
+				Console.WriteLine (sBuilder.ToString () + " " + file);
+
 				string[] d = new string[1];
 				return d;
 			}
+			return files;
+		}
+			//public string[] getHashesSrv ()
+			//{
+			//}
 			public int getOS() 
 			{ 
 			//ready. may be mac os ?
@@ -101,15 +134,15 @@ namespace mineumcli
 			return Encoding.ASCII.GetString(buf);
 			}
 			public bool compareVersions ()
-			{
-			/*Console.WriteLine ("Current version:" + cur_ver + "\nActual version:" + act_ver);
-			if (act_ver == cur_ver) {
-				Console.WriteLine ("No updates available");
-			} else if (act_ver != cur_ver) {
-				Console.WriteLine ("Update available");
-			}*/
+		{
+			if (this.getVersion () == this.getActualVersion ()) {
+				//false if no updates
+				return false;
+			} else {
+				//true if updates
 				return true;
 			}
+		}
 		}
 	public class MinecraftClientServer : MinecraftClient
 	{
