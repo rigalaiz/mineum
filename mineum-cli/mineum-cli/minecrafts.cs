@@ -59,10 +59,11 @@ namespace mineumcli
 			public string getActualVersion() 
 			{ 
 			//depends on XMLRead and may be function which will get vars from cfg
+				MinecraftSettings s = new MinecraftSettings();
 				WebClient con = new WebClient ();
 				byte[] udata;
 				try {
-				udata = con.DownloadData ("http://skoda-24.ru/mc_version");
+				udata = con.DownloadData (s.version_url);
 					return Encoding.ASCII.GetString (udata);
 				} catch (System.Net.WebException e) {
 					return e.Message;
@@ -115,13 +116,10 @@ namespace mineumcli
 			switch (System.Environment.OSVersion.Platform) {
 			case PlatformID.Unix:
 				return 1;
-				break;
 			case PlatformID.Win32NT:
 				return 2;
-				break;
 			default:
 				return 0;
-				break;
 			}
 			}
 			public string getVersion() 

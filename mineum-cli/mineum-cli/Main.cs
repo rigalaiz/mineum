@@ -10,7 +10,7 @@ namespace mineumcli
 
 			MinecraftClient Xen = new MinecraftClient();
 			MinecraftSettings s = new MinecraftSettings();
-			Console.WriteLine(s.md5hashes_url);
+			Console.WriteLine(Xen.getActualVersion());
 			Console.ReadLine ();
 
 			
