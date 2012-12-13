@@ -76,22 +76,29 @@ namespace mineumcli
 				//1 - unix; 2 - win
 			case 1:
 				return System.Environment.GetEnvironmentVariable("HOME")+"/.minecraft";
-
-
 			case 2:
-				return System.Environment.GetEnvironmentVariable("APPDATA")+"/.minecraft";
-
+				return "c:\\users\\sergey\\mc_test";
+				//return System.Environment.GetEnvironmentVariable("APPDATA")+"/.minecraft";
 				default:
 					return "";
-					
 			}
 			}
-			public string[,] getHashes ()
+			
+		public string[,] getHashes ()
 		{ 
-			string[] files = Directory.GetFiles (getPath (), "*.*", SearchOption.AllDirectories);
-			string[,]hashes = new string[files.Length,files.Length];
-			foreach (string file in files) {
-				FileStream f = new FileStream (file, FileMode.Open, FileAccess.Read);
+
+
+			try {
+				string[] files = Directory.GetFiles (getPath (), "*.*", SearchOption.AllDirectories);
+			} catch (System.IO.DirectoryNotFoundException e) {
+				Console.WriteLine(e.Message);
+				Directory.CreateDirectory(getPath());
+			}
+				finally{
+			string[,]hashes = new string[files.Length,2];
+			for (int d = 0 ; d<files.Length; d++){
+			//foreach (string file in files) {
+				FileStream f = new FileStream (files[d], FileMode.Open, FileAccess.Read);
 				byte[] buf = new byte[(int)f.Length];
 				f.Read (buf, 0, (int)f.Length);
 				MD5 hasher = MD5.Create ();
@@ -100,16 +107,13 @@ namespace mineumcli
 				for (int i = 0; i<data.Length; i++) {
 					sBuilder.Append (data [i].ToString ("x2"));
 
-
 				}
-				for (int i = 0; i<files.Length;i++){
-				hashes[i,0]=file;
-				hashes[i,1]=sBuilder.ToString();
-				}
-				//Console.WriteLine (sBuilder.ToString () + " " + file);
+				hashes[d,0]=files[d];
+				hashes[d,1]=sBuilder.ToString();
+				Console.WriteLine (sBuilder.ToString () + " " + files[d]);
 				}
 			return hashes;
-		}
+				}}
 			//public string[] getHashesSrv ()
 			//{
 			//}
