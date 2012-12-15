@@ -1,18 +1,24 @@
 using System;
 using System.Reflection;
 using System.Text;
+using System.Collections.Generic;
 namespace mineumcli
 {
 	class MainClass
 	{
-		public const string mc_ufile_url="http://127.0.0.1/mc_version";
+
 	 static void Main (string[] args)
 		{
+			var dic = new Dictionary<string,string>();
 			MinecraftClient Xen = new MinecraftClient ();
 			MinecraftSettings s = new MinecraftSettings ();
 			//string[,] test = Xen.getHashes ();
 			//Console.WriteLine(test.GetLength(0));
-			Xen.getHashesSrv();
+			dic=Xen.getHashes();
+			foreach (var ust in dic)
+			{
+				Console.WriteLine (ust.Key);
+			}
 			//Console.WriteLine(Xen.getHashes()[1,0]);
 			Console.ReadLine ();	
 		}
