@@ -14,6 +14,7 @@ namespace mineumcli
 
 		public string version_url;
 		public string md5hashes_url;
+		public string files_url;
 		public string login;
 		public string password;
 		public string metar_url;
@@ -23,6 +24,7 @@ namespace mineumcli
 			XmlTextReader reader = new XmlTextReader ("../../settings.xml");
 			this.version_url=getCbyE(reader,"version_url");
 			this.md5hashes_url=getCbyE(reader,"md5hashes_url");
+			this.files_url=getCbyE(reader,"files_url");
 		}
 		public MinecraftSettings (string config_path)
 		{
@@ -102,7 +104,7 @@ namespace mineumcli
 			} 
 			catch (WebException e) 
 			{
-				// Do add...
+				// To add...
 				return false;
 			}
 				
@@ -140,10 +142,11 @@ namespace mineumcli
 						{
 							sBuilder.Append (data [i].ToString ("x2"));
 						}
-						hashes.Add(files[d],sBuilder.ToString());
+						hashes.Add(files[d].Replace(getPath()+"\\",""),sBuilder.ToString());
 						//hashes[d,0]=files[d];
 						//hashes[d,1]=sBuilder.ToString();
-						Console.WriteLine (sBuilder.ToString () + " " + files[d]);
+						//Console.WriteLine (sBuilder.ToString () + " " + files[d]);
+						f.Close();
 					}
 				}
 				return hashes;
@@ -216,6 +219,10 @@ namespace mineumcli
 			public static bool IsEven(int value)
 			{
 			return value % 2 == 0;
+			}
+			public void delFile(string file)
+			{
+			File.Delete(file);
 			}
 
 		}

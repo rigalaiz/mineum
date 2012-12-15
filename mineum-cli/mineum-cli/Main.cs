@@ -9,18 +9,46 @@ namespace mineumcli
 
 	 static void Main (string[] args)
 		{
-			var dic = new Dictionary<string,string>();
+			var hashesClient = new Dictionary<string,string> ();
+			var hashesServer = new Dictionary<string,string> ();
 			MinecraftClient Xen = new MinecraftClient ();
 			MinecraftSettings s = new MinecraftSettings ();
-			//string[,] test = Xen.getHashes ();
-			//Console.WriteLine(test.GetLength(0));
-			//dic=Xen.getHashes();
-			//foreach (var ust in dic)
-			//{
-			//	Console.WriteLine (ust.Key);
-			//}
-			//Console.WriteLine(Xen.getHashes()[1,0]);
-			Xen.getFile ("","");
+			hashesClient = Xen.getHashes ();
+			hashesServer = Xen.getHashesSrv ();
+			var dlist = new List<string> ();
+			var delList = new List<string> ();
+			foreach (var ust in hashesClient) {
+				Console.WriteLine (ust.Key + "si");
+			}
+			foreach (var ust in hashesServer) 
+			{
+				if (hashesClient.ContainsKey (ust.Key)) 
+				{
+					Console.WriteLine ("совпадение!" + ust.Key);
+					if (hashesClient [ust.Key] != ust.Value) 
+					{
+						dlist.Add (ust.Key);
+						delList.Add (ust.Key);
+					}
+				} 
+				else 
+				{
+					dlist.Add (ust.Key);
+					Console.ForegroundColor = ConsoleColor.Red;
+					Console.WriteLine ("несовпадение!" + ust.Key);
+					Console.ForegroundColor = ConsoleColor.White;
+				}
+			}
+			foreach (string file in delList)
+			{
+				Console.WriteLine("Deleting file...{0}",file);
+				Xen.delFile(Xen.getPath()+"\\"+file);
+			}
+			foreach(string file in dlist)
+			{
+				Console.WriteLine("Downloading file...{0}",file);
+				Xen.getFile(s.files_url+file,Xen.getPath()+"\\"+file);
+			}
 			Console.ReadLine ();	
 		}
 
