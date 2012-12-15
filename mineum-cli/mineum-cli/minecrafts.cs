@@ -77,25 +77,29 @@ namespace mineumcli
 			case 1:
 				return System.Environment.GetEnvironmentVariable("HOME")+"/.minecraft";
 			case 2:
-				return "c:\\users\\sergey\\mc_test";
+				return System.Environment.GetEnvironmentVariable("APPDATA")+"\\mc_test";
 				//return System.Environment.GetEnvironmentVariable("APPDATA")+"/.minecraft";
 				default:
 					return "";
 			}
 			}
-			
-		public string[,] getHashes ()
+			public string[,] getHashes ()
 		{ 
 
-
+			string[] files;
+			string[,]hashes;
 			try {
-				string[] files = Directory.GetFiles (getPath (), "*.*", SearchOption.AllDirectories);
+				// нэработает!!!Directory.Exists(getPath());
+				files = Directory.GetFiles (getPath (), "*.*", SearchOption.AllDirectories);
 			} catch (System.IO.DirectoryNotFoundException e) {
 				Console.WriteLine(e.Message);
 				Directory.CreateDirectory(getPath());
 			}
 				finally{
-			string[,]hashes = new string[files.Length,2];
+				Console.WriteLine("Dont worry");
+				files = Directory.GetFiles (getPath (), "*.*", SearchOption.AllDirectories);
+				//moved up
+				hashes = new string[files.Length,2];
 			for (int d = 0 ; d<files.Length; d++){
 			//foreach (string file in files) {
 				FileStream f = new FileStream (files[d], FileMode.Open, FileAccess.Read);
@@ -112,11 +116,54 @@ namespace mineumcli
 				hashes[d,1]=sBuilder.ToString();
 				Console.WriteLine (sBuilder.ToString () + " " + files[d]);
 				}
+			//return hashes;
+				}
 			return hashes;
-				}}
-			//public string[] getHashesSrv ()
-			//{
-			//}
+		}
+			//  // // // // // // // // // //
+			public string[,] getHashesSrv ()
+			{
+			string[,] hashes= new string[1,1];
+			hashes[0,0]="1";
+
+			//
+			MinecraftSettings s = new MinecraftSettings();
+			WebClient con = new WebClient ();
+			byte[] udata;
+			try {
+				//udata = con.DownloadData (s.md5hashes_url);
+				//string test = Encoding.ASCII.GetString(udata);
+				string t = con.DownloadString(s.md5hashes_url);
+				//char[] c = ' ';
+				//Console.WriteLine(Encoding.ASCII.GetString(udata));
+				//Console.Write(test);
+
+				//Console.WriteLine(t);
+				string[] u = t.Split(new char[] {' ','\n'});
+				/*for(int i=0; i<u.Length;i++)
+				{
+
+				}*/
+				foreach (string sss in u)
+				{
+					if (sss.Length!=0)
+					{
+						Console.WriteLine(sss.Length);
+					}
+				}
+				//Console.WriteLine (u.Length);
+				//Console.WriteLine (u[4].Length);
+
+		
+				//return Encoding.ASCII.GetString(udata);
+			} catch (System.Net.WebException e) {
+				Console.WriteLine(e.Message);
+				//return e.Message;
+			}
+
+			//
+			return hashes;
+			}
 			public int getOS() 
 			{ 
 			//ready. may be mac os ?
@@ -138,6 +185,7 @@ namespace mineumcli
 			fstream.Read (buf, 0, (int)fstream.Length);
 			return Encoding.ASCII.GetString(buf);
 			}
+
 			public bool compareVersions ()
 		{
 			if (this.getVersion () == this.getActualVersion ()) {
@@ -147,6 +195,14 @@ namespace mineumcli
 				//true if updates
 				return true;
 			}
+		}
+		public static bool IsOdd(int value)
+		{
+			return value % 2 != 0;
+		}
+		public static bool IsEven(int value)
+		{
+			return value % 2 == 0;
 		}
 		}
 	public class MinecraftClientServer : MinecraftClient

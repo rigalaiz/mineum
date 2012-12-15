@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <MinecraftSettings>
 	<version_url>http://skoda-24.ru/mc_version</version_url>
-	<md5hashes_url>http://skoda-24.ru/mc/test.md5</md5hashes_url>
+	<md5hashes_url>http://skoda-24.ru/mc_files/test.md5</md5hashes_url>
 	<login>CFM-56-7B26</login>
 	<password>TEST</password>
 	<metar_url>http://127.0.0.1/metar</metar_url>

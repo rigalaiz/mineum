@@ -1,9 +1,10 @@
 ﻿<Properties GitUserInfo="UsingMD">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" ActiveRuntime="MS.NET" />
   <MonoDevelop.Ide.Workbench ActiveDocument="mineum-cli\minecrafts.cs">
     <Files>
-      <File FileName="c:\Users\sergey\Documents\GitHub\mineum\mineum-cli\mineum-cli\Main.cs" Line="14" Column="38" />
-      <File FileName="mineum-cli\minecrafts.cs" Line="90" Column="4" />
+      <File FileName="c:\Users\sergey\Documents\GitHub\mineum\mineum-cli\mineum-cli\Main.cs" Line="13" Column="6" />
+      <File FileName="mineum-cli\settings.xml" Line="4" Column="53" />
+      <File FileName="mineum-cli\minecrafts.cs" Line="206" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
