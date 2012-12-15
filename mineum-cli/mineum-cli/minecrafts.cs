@@ -6,6 +6,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Collections.Generic;
 
+
 namespace mineumcli
 {
 	public class MinecraftSettings
@@ -85,13 +86,27 @@ namespace mineumcli
 					case 1:
 					return System.Environment.GetEnvironmentVariable("HOME")+"/.minecraft";
 					case 2:
-					return System.Environment.GetEnvironmentVariable("APPDATA")+"\\.minecraft";
-					//return System.Environment.GetEnvironmentVariable("APPDATA")+"/.minecraft";
+					//return System.Environment.GetEnvironmentVariable("APPDATA")+"\\.minecraft";
+					return System.Environment.GetEnvironmentVariable("APPDATA")+"\\mc_test";
 					default:
 					return "";
 				}
 			}
 
+			public bool getFile (string getFrom, string getTo)
+		{
+			WebClient con = new WebClient ();
+			try {
+				con.DownloadFile (getFrom,getTo);
+				return true;
+			} 
+			catch (WebException e) 
+			{
+				// Do add...
+				return false;
+			}
+				
+			}
 			public Dictionary<string,string> getHashes ()
 			{
 				string[] files;

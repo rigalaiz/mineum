@@ -14,12 +14,13 @@ namespace mineumcli
 			MinecraftSettings s = new MinecraftSettings ();
 			//string[,] test = Xen.getHashes ();
 			//Console.WriteLine(test.GetLength(0));
-			dic=Xen.getHashes();
-			foreach (var ust in dic)
-			{
-				Console.WriteLine (ust.Key);
-			}
+			//dic=Xen.getHashes();
+			//foreach (var ust in dic)
+			//{
+			//	Console.WriteLine (ust.Key);
+			//}
 			//Console.WriteLine(Xen.getHashes()[1,0]);
+			Xen.getFile ("","");
 			Console.ReadLine ();	
 		}
 
